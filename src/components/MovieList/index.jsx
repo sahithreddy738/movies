@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { API_OPTIONS, POPULAR_MOVIES_URL } from "../../utils/constants";
+import React, {  useState } from "react";
 import Spinner from "../Spinner";
 import MovieCard from "../MovieCard";
 import MovieModal from "../Model";
+import usePopularMovies from "../../hooks/usePopularMovies";
 
 const MovieList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMovieId, setSelectedMovieId] = useState(null);
-  const [popularMovies, setPopularMovies] = useState([]);
-  const fetchPopularMovies = async () => {
-    const res = await fetch(POPULAR_MOVIES_URL, API_OPTIONS);
-    const data = await res.json();
-    setPopularMovies([...data?.results]);
-    console.log(popularMovies)
-  };
-  useEffect(() => {
-    fetchPopularMovies();
-  }, []);
+  const popularMovies=usePopularMovies();
   const openModal = (id) => {
     setIsModalOpen(true);
     setSelectedMovieId(id);
